@@ -1,0 +1,66 @@
+.content {
+	padding-top: 70px;
+	padding-bottom: 20px;
+	min-height: 550px;
+	margin-right: auto;
+	margin-left: auto;
+	clear: both;
+	height:auto !important;
+}
+
+.footer {
+	color: #777;
+	padding-left: 15px;
+  	padding-right: 15px;
+  	min-height: 50px;
+  	padding-bottom: 30px;
+}
+
+.icon-small {
+	width: 20px;
+	height: 20px;
+}
+
+.btn-large {
+	width: 100px;
+}
+
+.error-span {
+	color: red;
+}
+
+.welcome {
+	color: #fcfdee;
+}
+
+#wrap {
+	min-height: 100%;
+	height: auto !important;
+	height: 100%;
+	align: center;
+	text-align: center;
+}
+
+.input-title {
+	text-align: right;
+	padding-top: 5px;
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+.read-input {
+	text-align: left;
+	padding-top: 5px;
+}
+
+.logo {
+	witdh:224px;
+	height:224px;
+	border-radius: 4px;
+}
+
+.logo-mini {
+	witdh:60px;
+	height:60px;
+	border-radius: 2px;
+}

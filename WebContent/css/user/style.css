@@ -1,0 +1,46 @@
+.main-panel {
+	min-height: 100px;
+}
+
+#form .form-control {
+	width:400px;
+}
+
+.sep-line {
+	clear: both;
+	font-size: 0;
+	height: 0;
+	border-bottom: 1px solid #DDBFE8;
+	margin: 5px;
+	overflow: hidden
+}
+
+.detail {
+  color: inherit;
+  background-color: #eeeeee;
+  border-radius: 4px;
+  margin-top:10px;
+  padding:10px 10px 10px 10px;
+  font-size: 12px;
+  min-height:260px;
+  margin-bottom: 10px;
+}
+
+.introduce {
+	
+}
+
+.text-content {
+	color: #563d7c;
+}
+
+.profile-container {
+	position: relative;
+	border-radius: 4px;
+	border: 1px solid #eeeeee;
+	margin-bottom:10px;
+}
+
+.profile-title {
+	text-align: right;
+}

@@ -1,0 +1,38 @@
+#form {
+	margin-left: 22.5px;
+	
+}
+
+#form input {
+	width:300px;
+}
+
+.panel-center {
+	float: center;
+	width: 500px;
+	margin-right: auto;
+  	margin-left: auto;
+  	clear: both;
+}
+
+.panel-login {
+	float: center;
+	width: 400px;
+	margin-right: auto;
+  	margin-left: auto;
+  	clear: both;
+}
+
+.panel-login > .panel-body {
+	margin-right: auto;
+  	margin-left: auto;
+  	clear: both;	
+}
+
+.form-btn-group {
+  	margin-left: 73px;
+}
+
+.register-btn-div {
+	margin-left:175px;
+}

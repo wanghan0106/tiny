@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p" 
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:util="http://www.springframework.org/schema/util"
+    xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/util
+        http://www.springframework.org/schema/util/spring-util-3.2.xsd
+        http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context-3.2.xsd
+        http://www.springframework.org/schema/mvc
+       http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd" >
+    
+    <mvc:annotation-driven validator="validator" conversion-service="conversion-service"/>
+    
+    <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+        <property name="providerClass"  value="org.hibernate.validator.HibernateValidator"/>
+        <property name="validationMessageSource" ref="messageSource"/>
+    </bean>
+    <bean id="conversion-service" class="org.springframework.format.support.FormattingConversionServiceFactoryBean"  /> 
+     
+
+    <!-- 开启controller注解支持 -->
+    <context:component-scan base-package="com.roy.tiny">
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+    
+    <mvc:view-controller path="/" view-name="forward:/home"/>
+    
+    <mvc:resources mapping="/css/**" location="/css/" />
+    <mvc:resources mapping="/images/**" location="/images/" />
+    <mvc:resources mapping="/script/**" location="/script/" />
+    
+    <bean class="org.springframework.web.servlet.view.BeanNameViewResolver" p:order="0"/>  
+    
+    <!-- 根据客户端的不同的请求决定不同的 view进行响应, 如 /blog/1.json /blog/1.xml -->  
+    <bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver" p:order="1">  
+        <!-- 设置为true以忽略对Accept Header的支持-->  
+        <!-- 扩展名至mimeType的映射,即 /user.json => application/json -->  
+        <property name="favorPathExtension" value="false"/>  
+        
+         <!-- 用于开启 /userinfo/123?format=json 的支持 -->  
+         <property name="favorParameter" value="false"/>  
+         
+        <property name="mediaTypes">  <!--favorPathExtension, favorParameter是true时才起作用  -->
+            <map>  
+<!--                <entry key="wml" value="text/vnd.wap.wml"/>-->
+<!--                <entry key="vnd" value="application/vnd.wap.xhtml+xml"/>-->
+<!--                <entry key="xhtml" value="application/xhtml+xml"/>-->
+                <entry key="html" value="*"/>
+            </map>  
+         </property>  
+         <property name="viewResolvers">  
+             <list>  
+                <bean id="viewResolver" class="org.springframework.web.servlet.view.tiles3.TilesViewResolver">
+				  <property name="viewClass">
+				    <value>org.springframework.web.servlet.view.tiles3.TilesView</value>
+				  </property>
+				</bean>
+				<bean id="jspViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+                    <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+                    <property name="contentType" value="text/html"/>
+                    <property name="prefix" value="/page/"/>
+                    <property name="suffix" value=".jsp"/>
+                </bean>
+            </list>  
+        </property>  
+        <!-- 可配置Not Found url
+        <property name="defaultViews">
+            <list>  
+                 <bean class="org.springframework.web.servlet.view.JstlView" p:url="/notfound"/>  
+            </list>  
+        </property>  --> 
+    </bean>  
+	
+	
+	<!-- tiles配置器-->
+	<bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
+	 <property name="definitions">
+	   <list>
+	     <value>/WEB-INF/tiles/tiles-home.xml</value>
+	     <value>/WEB-INF/tiles/tiles-user.xml</value>
+	   </list>
+	 </property>
+	</bean> 
+
+    <!-- json view -->
+    <bean id="defaultJsonView" class="org.springframework.web.servlet.view.json.MappingJacksonJsonView"/>
+    
+    <!-- 文件上传相关 -->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <!--one of the properties available;the maximum file size in bytes-->
+        <property name="maxUploadSize" value="10485760"/>
+    </bean>
+     
+    <!-- 控制器异常处理 -->
+    <bean id="exceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+        <property name="exceptionMappings">
+              <props>
+                  <prop key="java.lang.Exception">
+                        error_all
+                </prop>
+            </props>
+        </property>
+    </bean>
+    
+    <mvc:interceptors>
+	    <bean class="com.roy.tiny.base.web.interceptor.AuthInterceptor" />  
+	</mvc:interceptors>  
+    
+    
+</beans>
