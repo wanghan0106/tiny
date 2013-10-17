@@ -215,4 +215,3 @@ pip-log.txt
 .mr.developer.cfg
 *.jar
 WebContent/WEB-INF/classes/*
-WebContent/images/logo
