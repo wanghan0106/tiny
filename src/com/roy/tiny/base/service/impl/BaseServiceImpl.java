@@ -3,6 +3,9 @@ package com.roy.tiny.base.service.impl;
 import java.io.Serializable;
 import java.util.List;
 
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.roy.tiny.base.dao.BaseDAO;
 import com.roy.tiny.base.dao.cond.Cond;
 import com.roy.tiny.base.model.Model;
@@ -17,11 +20,6 @@ public abstract class BaseServiceImpl<T extends Model> implements BaseService<T>
 	@Override
 	public void save(T object) {
 		getDao().save(object);
-	}
-
-	@Override
-	public void update(T object) {
-		getDao().update(object);
 	}
 
 	@Override

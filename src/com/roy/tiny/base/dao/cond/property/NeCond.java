@@ -17,6 +17,9 @@ public class NeCond extends PropertyCond {
 
 	@Override
 	public Criterion toCriterion() {
-		return Restrictions.neOrIsNotNull(property, value);
+		if(value == null) {
+			return Restrictions.isNotNull(property);
+		}
+		return Restrictions.ne(property, value);
 	}
 }

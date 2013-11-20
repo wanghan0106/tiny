@@ -12,4 +12,5 @@ public class TopicDAOImpl extends BaseDAOImpl<Topic> implements TopicDAO {
 	public TopicDAOImpl() {
 		this.entityClass = Topic.class;
 	}
+
 }

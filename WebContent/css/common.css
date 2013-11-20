@@ -21,6 +21,16 @@
 	height: 20px;
 }
 
+.icon-tiny {
+	width: 16px;
+	height: 16px;
+}
+
+.icon-nano {
+	width: 12px;
+	height: 12px;
+}
+
 .btn-large {
 	width: 100px;
 }
@@ -55,7 +65,7 @@
 
 .logo {
 	witdh:224px;
-	height:224px;
+	height:200px;
 	border-radius: 4px;
 }
 
@@ -63,4 +73,55 @@
 	witdh:60px;
 	height:60px;
 	border-radius: 2px;
+}
+
+.align-right {
+	text-align:right;
+}
+
+.align-left {
+	text-align:left;
+}
+
+.float-left {
+	float: left;
+}
+
+.float-right {
+	float: right;
+}
+
+.align-center {
+	text-align:center;
+}
+
+.show {
+	display:block;
+}
+
+.hide {
+	display:none;
+}
+
+.pager {
+	text-align: left;
+	line-height: 1;
+	font-size:12px;
+}
+
+.font-huge {
+	font-size:28px;
+	
+}
+
+.font-big {
+	font-size:24px;
+}
+
+.font-mid {
+	font-size:20px;
+}
+
+.font-small {
+	font-size:16px;
 }

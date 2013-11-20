@@ -59,12 +59,6 @@ public class BaseDAOImpl<T extends Model> implements BaseDAO<T> {
 	}
 
 	@Override
-	public void update(T object) {
-		sessionFactory.getCurrentSession().update(object);
-		sessionFactory.getCurrentSession().flush();
-	}
-
-	@Override
 	public void delete(T object) {
 		sessionFactory.getCurrentSession().delete(object);
 		sessionFactory.getCurrentSession().flush();
@@ -171,8 +165,7 @@ public class BaseDAOImpl<T extends Model> implements BaseDAO<T> {
 			aliasMap.putAll(AliasHelper.getAliasMap(sorter));
 		}
 		for (String key : aliasMap.keySet()) {
-			criteria.createAlias(key, aliasMap.get(key),
-					JoinType.LEFT_OUTER_JOIN);
+			criteria.createAlias(key, aliasMap.get(key),JoinType.LEFT_OUTER_JOIN);
 		}
 		return aliasMap;
 	}

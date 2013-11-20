@@ -7,6 +7,15 @@ public class Sort implements java.io.Serializable {
 	private String name;
 	private String order;
 	
+	public Sort() {
+		
+	}
+	
+	public Sort(final String name,final String order) {
+		this.name = name;
+		this.order = order;
+	}
+	
 	public String getName() {
 		return name;
 	}

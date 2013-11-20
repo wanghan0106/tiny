@@ -1,12 +1,18 @@
 package com.roy.tiny.user.model;
 
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import com.roy.tiny.base.model.Model;
@@ -28,6 +34,7 @@ public class User implements Model {
 	private String favorite;
 	private Date registerTime;
 	private Date lastLoginTime;
+	private List<User> focusUsers;
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -107,6 +114,15 @@ public class User implements Model {
 	}
 	public void setLastLoginTime(Date lastLoginTime) {
 		this.lastLoginTime = lastLoginTime;
+	}
+	
+	@ManyToMany(cascade={CascadeType.PERSIST, CascadeType.MERGE,CascadeType.REMOVE},targetEntity=User.class,fetch=FetchType.LAZY)
+	@JoinTable(name="user_focus_user",joinColumns=@JoinColumn(name="user_id"),inverseJoinColumns=@JoinColumn(name="focus_user_id"))
+	public List<User> getFocusUsers() {
+		return focusUsers;
+	}
+	public void setFocusUsers(List<User> focusUsers) {
+		this.focusUsers = focusUsers;
 	}
 	
 

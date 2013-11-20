@@ -1,12 +1,16 @@
 package com.roy.tiny.user.web;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Date;
+import java.util.Iterator;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -34,9 +38,10 @@ public class UserController {
 	private UserService userService;
 
 	@RequestMapping(value = "/user/add", method = RequestMethod.POST)
-    public String add(User user,Model model){
+    public String add(HttpSession session,User user,Model model){
 		user.setRegisterTime(new Date());
 		userService.save(user);
+		session.setAttribute("user",user);
         return "redirect:/home";
     }
 	
@@ -67,14 +72,43 @@ public class UserController {
         return "user/home";
     }
 	
-	@RequestMapping(value = "/user/{id:\\d+}")
-	public String home(@PathVariable(value="id") long id,Model model) {
+	@RequestMapping(value = "/user/{id:\\d+$}")
+	public String home(HttpSession session,@PathVariable(value="id") long id,Model model) {
 		User user = userService.get(id);
 		if(user==null) {
 			return "redirect:/404";
 		}
+		User loginUser = (User) session.getAttribute("user");
+		if(loginUser!=null && loginUser.getId()!=user.getId()) {
+			User u = userService.get(Cond.eq("focusUsers.id", user.getId()).and(Cond.eq("id", loginUser.getId())));
+			if(u==null) {
+				model.addAttribute("focus",false);
+			} else {
+				model.addAttribute("focus",true);
+			}
+		}
 		model.addAttribute("user",user);
         return "user/home";
+    }
+	
+	@RequestMapping(value = "/user/{id:\\d+}/logo")
+	public void logo(HttpServletRequest request,HttpServletResponse response,@PathVariable(value="id") long id) {
+		String filePath = request.getServletContext().getRealPath("/images/landscape.jpg");
+		try {
+			File file = new File(filePath);
+			FileInputStream input = new FileInputStream(file);
+			response.addHeader("Content-Disposition", "attachment;filename="+file.getName());
+			response.addHeader("Content-Length", "" + file.length());
+	        byte[] buffer = new byte[input.available()]; 
+	        input.read(buffer); 
+	        input.close();
+	        BufferedOutputStream output = new BufferedOutputStream(response.getOutputStream()); 
+	        output.write(buffer);
+	        output.flush();
+	        output.close(); 
+		} catch (IOException e) {
+			log.equals(e.getMessage());
+		}
     }
 	
 	@Auth
@@ -124,6 +158,42 @@ public class UserController {
 		} catch (IOException e) {
 			log.error(e.getMessage());
 		}
+	}
+	
+	@Auth
+	@RequestMapping(value = "/user/focus/{id:\\d+}")
+	@ResponseBody
+	public int focus(HttpSession session,@PathVariable(value="id") long id) {
+		User u = userService.get(id);
+		if(u==null) {
+			return 404;
+		}
+		User loginUser = (User) session.getAttribute("user");
+		loginUser = userService.get(loginUser.getId());
+		loginUser.getFocusUsers().add(u);
+		userService.save(loginUser);
+		return 0;
+	}
+	
+	@Auth
+	@RequestMapping(value = "/user/unfocus/{id:\\d+}")
+	@ResponseBody
+	public int unfocus(HttpSession session,@PathVariable(value="id") long id) {
+		User u = userService.get(id);
+		if(u==null) {
+			return 404;
+		}
+		User loginUser = (User) session.getAttribute("user");
+		loginUser = userService.get(loginUser.getId());
+		Iterator<User> iterator = loginUser.getFocusUsers().iterator();
+		while(iterator.hasNext()) {
+			User user = iterator.next();
+			if(user.getId() == u.getId()) {
+				iterator.remove();
+			}
+		}
+		userService.save(loginUser);
+		return 0;
 	}
 	
 }

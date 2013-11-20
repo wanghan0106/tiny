@@ -1,0 +1,25 @@
+.div-search {
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+.div-topic-list {
+	min-height: 400px;
+}
+
+.table-topic {
+}
+
+.table-topic tbody > tr > td {
+	height:20px;
+	line-height: 1;
+	font-size:12px;
+}
+
+.table-topic thead > tr > th {
+	height:20px;
+	line-height: 1;
+	font-size:12px;
+}
+
+

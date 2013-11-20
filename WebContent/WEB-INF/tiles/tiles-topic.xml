@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+          "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+          "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+   <definition name="topic/home" template="/page/topic/template.jsp">
+   		<put-attribute name="header" value="/page/home/header.jsp"/>
+		<put-attribute name="left" value="/page/topic/main.jsp"/>
+		<put-attribute name="right" value="/page/topic/right.jsp"/>
+		<put-attribute name="footer" value="/page/home/footer.jsp"/>
+   </definition>
+   <definition name="topic/add" template="/page/topic/template.jsp">
+   		<put-attribute name="header" value="/page/home/header.jsp"/>
+		<put-attribute name="left" value="/page/topic/add.jsp"/>
+		<put-attribute name="right" value="/page/topic/right.jsp"/>
+		<put-attribute name="footer" value="/page/home/footer.jsp"/>
+   </definition>
+   <definition name="topic/view" template="/page/topic/template.jsp">
+   		<put-attribute name="header" value="/page/home/header.jsp"/>
+		<put-attribute name="left" value="/page/topic/view.jsp"/>
+		<put-attribute name="right" value="/page/topic/right.jsp"/>
+		<put-attribute name="footer" value="/page/home/footer.jsp"/>
+   </definition>
+</tiles-definitions>
+
+

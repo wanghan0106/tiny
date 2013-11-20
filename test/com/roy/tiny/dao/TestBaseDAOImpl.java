@@ -1,6 +1,7 @@
 package com.roy.tiny.dao;
 
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import junit.framework.Assert;
@@ -14,6 +15,7 @@ import com.roy.tiny.base.dao.cond.Cond;
 import com.roy.tiny.base.model.Text;
 import com.roy.tiny.topic.dao.TopicDAO;
 import com.roy.tiny.topic.model.Topic;
+import com.roy.tiny.topic.service.TopicService;
 import com.roy.tiny.user.dao.UserDAO;
 import com.roy.tiny.user.model.User;
 
@@ -53,7 +55,7 @@ public class TestBaseDAOImpl extends TransactionalTestCase {
 	}
 	
 	@Test
-	public void addTopic() {
+	public void testAddTopic() {
 		Topic topic = new Topic();
 		topic.setTitle("aaa");
 		Date date = new Date();
@@ -70,6 +72,31 @@ public class TestBaseDAOImpl extends TransactionalTestCase {
 		topicDao.delete(topic);
 		Assert.assertEquals(null, textDao.get(Cond.eq("content", "aaabbb")));
 	}
+	
+	@Test
+	public void testAddFocusUser() {
+		User u1 = userDao.get(Cond.eq("username", "roy042"));
+		User u2 = userDao.get(Cond.eq("username", "duke"));
+		Assert.assertNotNull(u1);
+		Assert.assertNotNull(u2);
+		u1.getFocusUsers().add(u2);
+		userDao.save(u1);
+		User u = userDao.get(Cond.eq("focusUsers.id", u2.getId()).and(Cond.eq("id", u1.getId())));
+		Assert.assertNotNull(u);
+		Assert.assertEquals(u1.getId(), u.getId());
+		Iterator<User> iterator = u1.getFocusUsers().iterator();
+		while(iterator.hasNext()) {
+			User user = iterator.next();
+			if(user.getId() == u2.getId()) {
+				iterator.remove();
+			}
+		}
+		userDao.save(u1);
+		u = userDao.get(Cond.eq("focusUsers.id", u2.getId()).and(Cond.eq("id", u1.getId())));
+		Assert.assertNull(u);
+	}
+	
+	
 	
 	
 	

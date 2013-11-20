@@ -2,7 +2,20 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
-
+<script>
+$(function(){
+	var url = document.location.href;
+	url = url.substring(url.indexOf('${ctx}'),url.length);
+	var paths = url.split('/');
+	var module = 'home';
+	if(paths[2]!='') {
+		$('#nav-'+paths[2]).addClass('active');
+	} else {
+		$('#nav-home').addClass('active');
+	}
+	
+});
+</script>
 <div class="navbar navbar-inverse navbar-fixed-top">
 	<div class="container">
 		<div class="navbar-header">
@@ -10,11 +23,10 @@
 		</div>
 		<div class="navbar-collapse collapse">
 			<ul class="nav navbar-nav ${ctx}">
-				<li class="active"><a href="${ctx}/home">首页</a></li>
-				<li><a href="${ctx}/topic">话题</a></li>
-				<li><a href="${ctx}/meeting">活动</a></li>
-				<li><a href="${ctx}/ask">问答</a></li>
-				<li><a href="${ctx}/about">关于我们</a></li>
+				<li id="nav-home"><a href="${ctx}/home">首页</a></li>
+				<li id="nav-topic"><a href="${ctx}/topic">话题</a></li>
+				<li id="nav-question"><a href="${ctx}/question">问答</a></li>
+				<li id="nav-about"><a href="${ctx}/about">关于我们</a></li>
 			</ul>
 			<form class="navbar-form navbar-right">
 				<c:if test="${sessionScope.user!=null}">

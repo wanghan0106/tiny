@@ -4,5 +4,5 @@
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 
 <div class="content">
-	<h1>Home</h1>
+	<h1>首页</h1>
 </div>

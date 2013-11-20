@@ -17,6 +17,9 @@ public class EqCond extends PropertyCond {
 
 	@Override
 	public Criterion toCriterion() {
-		return Restrictions.eqOrIsNull(property, value);
+		if(value == null) {
+			return Restrictions.isNull(property);
+		}
+		return Restrictions.eq(property, value);
 	}
 }

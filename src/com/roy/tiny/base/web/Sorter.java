@@ -10,6 +10,11 @@ public class Sorter extends ArrayList<Sort> {
 		super();
 	}
 	
+	public Sorter(final String name,final String order) {
+		super();
+		this.add(new Sort(name,order));
+	}
+	
 	public Sorter(Sort sort) {
 		this();
 		this.add(sort);
