@@ -24,7 +24,7 @@ import com.roy.tiny.user.model.User;
 
 @Entity
 @Table(name="topic")
-public class Topic implements Model {
+public class Topic extends Model {
 	private static final long serialVersionUID = 1L;
 
 	private long id;

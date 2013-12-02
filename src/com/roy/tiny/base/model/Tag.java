@@ -10,7 +10,7 @@ import javax.persistence.UniqueConstraint;
 
 @Entity
 @Table(name="tag",uniqueConstraints = {@UniqueConstraint(columnNames={"name"})})
-public class Tag implements Model {
+public class Tag extends Model {
 	private Long id;
 	private String name;
 	private int priority;

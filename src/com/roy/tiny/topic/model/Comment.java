@@ -1,4 +1,4 @@
-package com.roy.tiny.question.model;
+package com.roy.tiny.topic.model;
 
 import java.util.Date;
 
@@ -14,17 +14,18 @@ import javax.persistence.Table;
 
 import com.roy.tiny.base.model.Model;
 import com.roy.tiny.base.model.Text;
+import com.roy.tiny.user.model.User;
 
 @Entity
-@Table(name="question")
-public class Question extends Model {
+@Table(name="comment")
+public class Comment extends Model {
 	private static final long serialVersionUID = 1L;
-
+	
 	private long id;
-	private String title;
-	private Date createTime;
-	private Date updateTime;
 	private Text text;
+	private Date createTime;
+	private User user;
+	private Topic topic;
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -35,28 +36,6 @@ public class Question extends Model {
 		this.id = id;
 	}
 	
-	@Column(name="title",length=200)
-	public String getTitle() {
-		return title;
-	}
-	public void setTitle(String title) {
-		this.title = title;
-	}
-	
-	@Column(name="create_time")
-	public Date getCreateTime() {
-		return createTime;
-	}
-	public void setCreateTime(Date createTime) {
-		this.createTime = createTime;
-	}
-	@Column(name="update_time")
-	public Date getUpdateTime() {
-		return updateTime;
-	}
-	public void setUpdateTime(Date updateTime) {
-		this.updateTime = updateTime;
-	}
 	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE,CascadeType.REMOVE} )
     @JoinColumn(name="text_id")
 	public Text getText() {
@@ -64,6 +43,31 @@ public class Question extends Model {
 	}
 	public void setText(Text text) {
 		this.text = text;
+	}
+	@Column(name="create_time")
+	public Date getCreateTime() {
+		return createTime;
+	}
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
+	
+	@ManyToOne(cascade = {CascadeType.PERSIST} )
+    @JoinColumn(name="user_id")
+	public User getUser() {
+		return user;
+	}
+	public void setUser(User user) {
+		this.user = user;
+	}
+	
+	@ManyToOne(cascade = {CascadeType.PERSIST} )
+    @JoinColumn(name="topic_id")
+	public Topic getTopic() {
+		return topic;
+	}
+	public void setTopic(Topic topic) {
+		this.topic = topic;
 	}
 	
 }

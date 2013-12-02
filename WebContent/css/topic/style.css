@@ -22,4 +22,41 @@
 	font-size:12px;
 }
 
+.topic-content {
+	margin-top:10px;
+	min-height: 400px;
+	
+}
+
+.user-logo {
+	float: left;
+	overflow: hidden;
+	width:50px;
+}
+
+.topic-doc {
+	float: right;
+	text-align:left;
+	width: 92%;	
+}
+
+.topic-remark {
+	text-align: left;
+	color: #888888;
+}
+
+.topic-text {
+	margin-top: 10px;
+}
+
+.topic-comment {
+	
+}
+
+.topic-comment-content {
+	float: right;
+	text-align:left;
+	width: 92%;
+}
+
 

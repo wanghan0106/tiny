@@ -12,7 +12,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="text")
-public class Text implements Model {
+public class Text extends Model {
 	private long id;
 	private String content;
 	

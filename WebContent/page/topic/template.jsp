@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>话题-Tiny</title>
+<title><c:if test="${topic!=null}">${topic.title}-</c:if>话题-Tiny</title>
 </head>
 <link href="${ctx}/css/bootstrap/bootstrap.css" rel="stylesheet">
 <link href="${ctx}/css/common.css" rel="stylesheet">

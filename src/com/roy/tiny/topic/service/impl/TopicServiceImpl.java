@@ -1,6 +1,7 @@
 package com.roy.tiny.topic.service.impl;
 
 import java.util.Date;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,7 +14,11 @@ import com.roy.tiny.base.dao.TextDAO;
 import com.roy.tiny.base.dao.cond.Cond;
 import com.roy.tiny.base.model.Tag;
 import com.roy.tiny.base.service.impl.BaseServiceImpl;
+import com.roy.tiny.base.web.Pager;
+import com.roy.tiny.base.web.Sorter;
+import com.roy.tiny.topic.dao.CommentDAO;
 import com.roy.tiny.topic.dao.TopicDAO;
+import com.roy.tiny.topic.model.Comment;
 import com.roy.tiny.topic.model.Topic;
 import com.roy.tiny.topic.service.TopicService;
 import com.roy.tiny.user.model.User;
@@ -29,9 +34,32 @@ public class TopicServiceImpl extends BaseServiceImpl<Topic> implements TopicSer
 	private TextDAO textDao;
 	@Autowired
 	private TagDAO tagDao;
+	@Autowired
+	private CommentDAO commentDao;
 
-	protected BaseDAO<Topic> getDao() {
+
+	public TopicDAO getTopicDao() {
 		return topicDao;
+	}
+
+	public void setTopicDao(TopicDAO topicDao) {
+		this.topicDao = topicDao;
+	}
+
+	public TextDAO getTextDao() {
+		return textDao;
+	}
+
+	public void setTextDao(TextDAO textDao) {
+		this.textDao = textDao;
+	}
+
+	public TagDAO getTagDao() {
+		return tagDao;
+	}
+
+	public void setTagDao(TagDAO tagDao) {
+		this.tagDao = tagDao;
 	}
 
 	public void save(Topic topic,User user) {
@@ -56,5 +84,22 @@ public class TopicServiceImpl extends BaseServiceImpl<Topic> implements TopicSer
 		}
 		this.save(topic);
 	}
+	
+	@Override
+	public List<Comment> getComments(long topicId) {
+		return getComments(topicId, 1);
+	}
 
+	@Override
+	public List<Comment> getComments(long topicId, int page) {
+		Pager pager = new Pager(20);
+		pager.setPage(page);
+		return commentDao.query(Cond.eq("topic.id", topicId), pager, new Sorter("createTime","asc"));
+	}
+
+	@Override
+	protected BaseDAO<Topic> getDao() {
+		return topicDao;
+	}
+	
 }

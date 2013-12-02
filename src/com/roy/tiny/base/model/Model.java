@@ -1,6 +1,5 @@
 package com.roy.tiny.base.model;
 
-import java.io.Serializable;
+public abstract class Model implements java.io.Serializable {
 
-public interface Model extends java.io.Serializable {
 }

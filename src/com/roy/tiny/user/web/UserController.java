@@ -107,7 +107,7 @@ public class UserController {
 	        output.flush();
 	        output.close(); 
 		} catch (IOException e) {
-			log.equals(e.getMessage());
+			log.error(e.getMessage());
 		}
     }
 	

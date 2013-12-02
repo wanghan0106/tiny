@@ -19,7 +19,7 @@ import com.roy.tiny.base.model.Model;
 
 @Entity
 @Table(name="user")
-public class User implements Model {
+public class User extends Model {
 
 	private static final long serialVersionUID = 1L;
 

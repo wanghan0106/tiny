@@ -67,8 +67,13 @@ public class TopicController {
 	
 	@RequestMapping(value = "/topic/{id:\\d+$}")
 	public String view(HttpSession session,@PathVariable(value="id") long id,Model model) {
-		
+		Topic topic = topicService.get(id);
+		if(topic==null) {
+			return "redirect:/404";
+		}
+		model.addAttribute("topic", topic);
 		model.addAttribute("tags", tagService.getPopularTags());
+		model.addAttribute("comments", topicService.getComments(id));
 		return  "topic/view";
 	}
 }
