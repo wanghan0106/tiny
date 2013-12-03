@@ -7,9 +7,4 @@ import com.roy.tiny.base.model.Tag;
 
 @Repository("tagDao")
 public class TagDAOImpl extends BaseDAOImpl<Tag> implements TagDAO {
-
-	public TagDAOImpl() {
-		this.entityClass = Tag.class;
-	}
-
 }

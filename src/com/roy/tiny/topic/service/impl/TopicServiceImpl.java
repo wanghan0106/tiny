@@ -63,8 +63,10 @@ public class TopicServiceImpl extends BaseServiceImpl<Topic> implements TopicSer
 	}
 
 	public void save(Topic topic,User user) {
+		Date date = new Date();
 		textDao.save(topic.getText());
-		topic.setCreateTime(new Date());
+		topic.setCreateTime(date);
+		topic.setUpdateTime(new Date());
 		topic.setUser(user);
 		this.save(topic);
 		if(topic.getTagNames()!=null && topic.getTagNames().length()>0) {
@@ -85,21 +87,41 @@ public class TopicServiceImpl extends BaseServiceImpl<Topic> implements TopicSer
 		this.save(topic);
 	}
 	
-	@Override
-	public List<Comment> getComments(long topicId) {
-		return getComments(topicId, 1);
-	}
 
 	@Override
-	public List<Comment> getComments(long topicId, int page) {
-		Pager pager = new Pager(20);
-		pager.setPage(page);
+	public List<Comment> getComments(long topicId, Pager pager) {
 		return commentDao.query(Cond.eq("topic.id", topicId), pager, new Sorter("createTime","asc"));
 	}
 
-	@Override
 	protected BaseDAO<Topic> getDao() {
 		return topicDao;
+	}
+
+	@Override
+	public void addComment(Comment comment, User user) {
+		Date date = new Date();
+		comment.setCreateTime(date);
+		comment.setUser(user);
+		comment.getTopic().setUpdateTime(date);
+		comment.getTopic().setReplyNumber(comment.getTopic().getReplyNumber()+1);
+		topicDao.save(comment.getTopic());
+		textDao.save(comment.getText());
+		commentDao.save(comment);
+	}
+
+	@Override
+	public Comment getCommentById(long id) {
+		return commentDao.get(id);
+	}
+
+	@Override
+	public void delComment(Comment comment) {
+		if(comment.getTopic().getReplyNumber()>0) {
+			comment.getTopic().setReplyNumber(comment.getTopic().getReplyNumber()-1);
+			topicDao.save(comment.getTopic());
+		}
+		commentDao.delete(comment);
+		
 	}
 	
 }

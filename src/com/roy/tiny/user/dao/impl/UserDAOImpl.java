@@ -8,8 +8,4 @@ import com.roy.tiny.user.model.User;
 
 @Repository("userDao")
 public class UserDAOImpl extends BaseDAOImpl<User> implements UserDAO {
-	
-	public UserDAOImpl() {
-		this.entityClass = User.class;
-	}
 }

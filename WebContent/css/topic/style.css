@@ -24,8 +24,7 @@
 
 .topic-content {
 	margin-top:10px;
-	min-height: 400px;
-	
+	clear:both;
 }
 
 .user-logo {
@@ -47,10 +46,20 @@
 
 .topic-text {
 	margin-top: 10px;
+	min-height: 300px;
 }
 
+.topic-tail {
+	text-align: left;
+	margin-bottom: 10px;
+	font-size:12px;
+}
+
+
 .topic-comment {
-	
+	clear:both;
+	min-height:60px;
+	margin-bottom:5px;
 }
 
 .topic-comment-content {
@@ -58,5 +67,24 @@
 	text-align:left;
 	width: 92%;
 }
+
+.topic-comment-remark {
+	text-align: left;
+	color: #888888;
+	font-size: 12px;
+}
+
+.topic-comment-text {
+	margin-top: 5px;
+}
+
+.topic-add-comment {
+
+}
+
+.topic-comment-pager {
+	margin-bottom:10px;
+}
+
 
 

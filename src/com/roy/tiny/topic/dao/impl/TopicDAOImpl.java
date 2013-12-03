@@ -8,9 +8,4 @@ import com.roy.tiny.topic.model.Topic;
 
 @Repository("topicDao")
 public class TopicDAOImpl extends BaseDAOImpl<Topic> implements TopicDAO {
-	
-	public TopicDAOImpl() {
-		this.entityClass = Topic.class;
-	}
-
 }

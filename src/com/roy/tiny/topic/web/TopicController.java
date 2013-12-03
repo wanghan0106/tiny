@@ -16,6 +16,7 @@ import com.roy.tiny.base.service.TagService;
 import com.roy.tiny.base.web.Pager;
 import com.roy.tiny.base.web.Sorter;
 import com.roy.tiny.base.web.annotation.Auth;
+import com.roy.tiny.topic.model.Comment;
 import com.roy.tiny.topic.model.Topic;
 import com.roy.tiny.topic.service.TopicService;
 import com.roy.tiny.user.model.User;
@@ -71,9 +72,52 @@ public class TopicController {
 		if(topic==null) {
 			return "redirect:/404";
 		}
+		viewTopic(id, 1, model, topic);
+		return  "topic/view";
+	}
+	
+	@RequestMapping(value = "/topic/{id:\\d+$}/{page:\\d+$}")
+	public String view(HttpSession session,@PathVariable(value="id") long id,@PathVariable(value="page") int page,Model model) {
+		Topic topic = topicService.get(id);
+		if(topic==null) {
+			return "redirect:/404";
+		}
+		viewTopic(id, page, model, topic);
+		return  "topic/view";
+	}
+
+	private void viewTopic(long id, int page, Model model, Topic topic) {
 		model.addAttribute("topic", topic);
 		model.addAttribute("tags", tagService.getPopularTags());
-		model.addAttribute("comments", topicService.getComments(id));
-		return  "topic/view";
+		Pager pager = new Pager(20);
+		pager.setPage(page);
+		model.addAttribute("comments", topicService.getComments(id,pager));
+		model.addAttribute("pager", pager);
+	}
+	
+	@RequestMapping(value = "/topic/comment/add")
+	@Auth
+	public String addComment(HttpSession session,Comment comment) {
+		User user = (User) session.getAttribute("user");
+		Topic topic = topicService.get(comment.getTopic().getId());
+		if(topic==null) {
+			return "redirect:/404";
+		}
+		comment.setTopic(topic);
+		topicService.addComment(comment, user);
+		return "redirect:/topic/"+topic.getId();
+	}
+	
+	@RequestMapping(value = "/topic/comment/del/{id:\\d+$}")
+	@Auth
+	public String delComment(HttpSession session,@PathVariable(value="id") long id) {
+		User user = (User) session.getAttribute("user");
+		Comment comment = topicService.getCommentById(id);
+		if(comment==null) {
+			return "redirect:/404";
+		}
+		Topic topic = comment.getTopic();
+		topicService.delComment(comment);
+		return "redirect:/topic/"+topic.getId();
 	}
 }

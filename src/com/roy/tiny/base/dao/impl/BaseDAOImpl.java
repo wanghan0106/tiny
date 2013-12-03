@@ -1,6 +1,7 @@
 package com.roy.tiny.base.dao.impl;
 
 import java.io.Serializable;
+import java.lang.reflect.ParameterizedType;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,7 +35,6 @@ public class BaseDAOImpl<T extends Model> implements BaseDAO<T> {
 
 	@Autowired
 	protected SessionFactory sessionFactory;
-	protected Class<T> entityClass;
 
 	public SessionFactory getSessionFactory() {
 		return sessionFactory;
@@ -42,14 +42,6 @@ public class BaseDAOImpl<T extends Model> implements BaseDAO<T> {
 
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
-	}
-
-	public Class<T> getEntityClass() {
-		return entityClass;
-	}
-
-	public void setEntityClass(Class<T> entityClass) {
-		this.entityClass = entityClass;
 	}
 
 	@Override
@@ -67,7 +59,7 @@ public class BaseDAOImpl<T extends Model> implements BaseDAO<T> {
 	@SuppressWarnings("unchecked")
 	@Override
 	public T get(Serializable id) {
-		return (T) sessionFactory.getCurrentSession().get(entityClass, id);
+		return (T) sessionFactory.getCurrentSession().get(getEntityClass(), id);
 	}
 
 	@Override
@@ -83,7 +75,7 @@ public class BaseDAOImpl<T extends Model> implements BaseDAO<T> {
 	@Override
 	public List<T> query(Cond cond, Pager pager, Sorter sorter) {
 		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(
-				entityClass);
+				getEntityClass());
 		prepare(criteria, cond, pager, sorter);
 		criteria.setResultTransformer(CriteriaSpecification.ROOT_ENTITY);
 		criteria.setFlushMode(FlushMode.COMMIT);
@@ -203,6 +195,15 @@ public class BaseDAOImpl<T extends Model> implements BaseDAO<T> {
 		Query query = sessionFactory.getCurrentSession().createQuery(hql);
 		query.setParameters(values, types);
 		return query.list();
+	}
+	
+	protected Class getEntityClass() {
+		java.lang.reflect.Type type = this.getClass().getGenericSuperclass();
+		if(type instanceof ParameterizedType) {
+			ParameterizedType ptype = (ParameterizedType) type;
+			return (Class) ptype.getActualTypeArguments()[0];
+		}
+		return Model.class;
 	}
 
 }

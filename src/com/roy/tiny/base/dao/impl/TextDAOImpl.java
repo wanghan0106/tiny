@@ -8,9 +8,4 @@ import com.roy.tiny.user.model.User;
 
 @Repository("textDao")
 public class TextDAOImpl extends BaseDAOImpl<Text> implements TextDAO {
-
-	public TextDAOImpl() {
-		this.entityClass = Text.class;
-	}
-
 }

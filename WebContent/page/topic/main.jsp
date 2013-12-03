@@ -42,7 +42,7 @@ function page(p){
     		<td><a href="${ctx}/topic/${topic.id}">${topic.title}</a></td>
     		<td><a href="${ctx}/user/1">${topic.user.nickname}</a></td>
     		<td>${topic.replyNumber}</td>
-    		<td>${fn:substring(topic.createTime,5,16)}</td>
+    		<td>${fn:substring(topic.updateTime,5,16)}</td>
     	</tr>
     	</c:forEach>
     	<tr>

@@ -3,9 +3,6 @@ package com.roy.tiny.base.service.impl;
 import java.io.Serializable;
 import java.util.List;
 
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.roy.tiny.base.dao.BaseDAO;
 import com.roy.tiny.base.dao.cond.Cond;
 import com.roy.tiny.base.model.Model;
@@ -33,17 +30,17 @@ public abstract class BaseServiceImpl<T extends Model> implements BaseService<T>
 	}
 
 	@Override
-	public List query(Cond cond, Pager pager, Sorter sorter) {
+	public List<T> query(Cond cond, Pager pager, Sorter sorter) {
 		return getDao().query(cond, pager, sorter);
 	}
 
 	@Override
-	public List query(Cond cond, Sorter sorter) {
+	public List<T> query(Cond cond, Sorter sorter) {
 		return getDao().query(cond, sorter);
 	}
 	
 	@Override
-	public List query(Cond cond) {
+	public List<T> query(Cond cond) {
 		return getDao().query(cond);
 	}
 	

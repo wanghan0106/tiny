@@ -8,9 +8,4 @@ import com.roy.tiny.topic.model.Comment;
 
 @Repository("commentDao")
 public class CommentDAOImpl extends BaseDAOImpl<Comment> implements CommentDAO {
-	
-	public CommentDAOImpl() {
-		this.entityClass = Comment.class;
-	}
-
 }

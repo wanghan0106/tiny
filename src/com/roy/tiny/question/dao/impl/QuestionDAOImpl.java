@@ -8,8 +8,4 @@ import com.roy.tiny.question.model.Question;
 
 @Repository("questionDao")
 public class QuestionDAOImpl extends BaseDAOImpl<Question> implements QuestionDAO {
-	
-	public QuestionDAOImpl() {
-		this.entityClass = Question.class;
-	}
 }
