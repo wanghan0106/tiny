@@ -12,6 +12,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.roy.tiny.base.dao.cond.Cond;
+import com.roy.tiny.base.model.Tag;
 import com.roy.tiny.base.service.TagService;
 import com.roy.tiny.base.web.Pager;
 import com.roy.tiny.base.web.Sorter;
@@ -32,24 +34,46 @@ public class TopicController {
 	
 	@RequestMapping(value = "/topic")
 	public String home(Model model) {
-		getTopicList(model,1);
+		getTopicList(null,model,1);
 		return  "topic/home";
 	}
 	
 	@RequestMapping(value = "/topic/page/{page:\\d+$}")
 	public String page(Model model,@PathVariable(value="page") int page) {
-		getTopicList(model,page);
+		getTopicList(null,model,page);
 		return  "topic/home";
 	}
 	
-	private void getTopicList(Model model,int page) {
+	@RequestMapping(value = "/topic/tag/{id:\\d+$}")
+	public String showByTag(Model model,@PathVariable(value="id") long id) {
+		Tag tag = tagService.get(id);
+		if(tag==null) {
+			return "redirect:/404";
+		}
+		getTopicList(Cond.eq("tags.id", id),model,1);
+		model.addAttribute("tag", tag);
+		return  "topic/showByTag";
+	}
+	@RequestMapping(value = "/topic/tag/{id:\\d+$}/{page:\\d+$}")
+	public String showByTag(Model model,@PathVariable(value="id") long id,@PathVariable(value="page") int page) {
+		Tag tag = tagService.get(id);
+		if(tag==null) {
+			return "redirect:/404";
+		}
+		getTopicList(Cond.eq("tags.id", id),model,page);
+		model.addAttribute("tag", tag);
+		return  "topic/showByTag";
+	}
+	
+	private void getTopicList(Cond cond,Model model,int page) {
 		Pager pager = new Pager(20);
 		pager.setPage(page);
-		List<Topic> topicList = topicService.query(null, pager , new Sorter("createTime","desc"));
+		List<Topic> topicList = topicService.query(cond, pager , new Sorter("createTime","desc"));
 		model.addAttribute("pager", pager);
 		model.addAttribute("topicList", topicList);
 		model.addAttribute("tags", tagService.getPopularTags());
 	}
+
 	
 	@RequestMapping(value = "/topic/add")
 	@Auth

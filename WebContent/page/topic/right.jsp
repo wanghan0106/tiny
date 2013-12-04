@@ -19,16 +19,16 @@
 	<div>
 	<c:forEach var="tag" items="${tags}" varStatus="status">
 	<c:if test="${status.index==0}">
-		<a href="${ctx}/topic"><span class="font-huge">${tag.name}</span></a>
+		<a href="${ctx}/topic/tag/${tag.id}"><span class="font-huge">${tag.name}</span></a>
 	</c:if>
 	<c:if test="${status.index>0 && status.index<4}">
-		<a href="${ctx}/topic"><span class="font-big">${tag.name}</span></a>
+		<a href="${ctx}/topic/tag/${tag.id}"><span class="font-big">${tag.name}</span></a>
 	</c:if>
 	<c:if test="${status.index>3 && status.index<7}">
-		<a href="${ctx}/topic"><span class="font-mid">${tag.name}</span></a>
+		<a href="${ctx}/topic/tag/${tag.id}"><span class="font-mid">${tag.name}</span></a>
 	</c:if>
 	<c:if test="${status.index>6}">
-		<a href="${ctx}/topic"><span class="font-small">${tag.name}</span></a>
+		<a href="${ctx}/topic/tag/${tag.id}"><span class="font-small">${tag.name}</span></a>
 	</c:if>
 	</c:forEach>
 	</div>

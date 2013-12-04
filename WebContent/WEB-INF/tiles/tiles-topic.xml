@@ -22,6 +22,12 @@
 		<put-attribute name="right" value="/page/topic/right.jsp"/>
 		<put-attribute name="footer" value="/page/home/footer.jsp"/>
    </definition>
+   <definition name="topic/showByTag" template="/page/topic/template.jsp">
+   		<put-attribute name="header" value="/page/home/header.jsp"/>
+		<put-attribute name="left" value="/page/topic/showByTag.jsp"/>
+		<put-attribute name="right" value="/page/topic/right.jsp"/>
+		<put-attribute name="footer" value="/page/home/footer.jsp"/>
+   </definition>
 </tiles-definitions>
 
 
