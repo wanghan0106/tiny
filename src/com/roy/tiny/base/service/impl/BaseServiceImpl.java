@@ -29,12 +29,17 @@ public abstract class BaseServiceImpl<T extends Model> implements BaseService<T>
 	@Autowired
 	private DaoFactory daoFactory;
 	
+	private BaseDAO<T> dao;
+	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	protected BaseDAO<T> getDao() {
-		java.lang.reflect.Type type = this.getClass().getGenericSuperclass();
-		ParameterizedType ptype = (ParameterizedType) type;
-		Class entityClass = (Class<T>) ptype.getActualTypeArguments()[0];
-		return daoFactory.getDao(entityClass);
+		if(dao == null) {
+			java.lang.reflect.Type type = this.getClass().getGenericSuperclass();
+			ParameterizedType ptype = (ParameterizedType) type;
+			Class entityClass = (Class<T>) ptype.getActualTypeArguments()[0];
+			dao = daoFactory.getDao(entityClass);
+		}
+		return dao;
 	}
 
 	@Override
