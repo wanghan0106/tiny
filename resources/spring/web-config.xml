@@ -17,6 +17,8 @@
     
     <mvc:annotation-driven validator="validator" conversion-service="conversion-service"/>
     
+    <bean class="com.roy.tiny.base.service.annotation.AnnotationBeanPostProcessor"/>
+    
     <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
         <property name="providerClass"  value="org.hibernate.validator.HibernateValidator"/>
         <property name="validationMessageSource" ref="messageSource"/>

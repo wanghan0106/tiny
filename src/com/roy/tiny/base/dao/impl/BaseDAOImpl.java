@@ -35,6 +35,23 @@ public class BaseDAOImpl<T extends Model> implements BaseDAO<T> {
 
 	@Autowired
 	protected SessionFactory sessionFactory;
+	
+	private Class<T> entityClass;
+
+	public void setEntityClass(Class<T> entityClass) {
+		this.entityClass = entityClass;
+	}
+	
+	public Class<T> getEntityClass() {
+		if(entityClass == null) {
+			java.lang.reflect.Type type = this.getClass().getGenericSuperclass();
+			if(type instanceof ParameterizedType) {
+				ParameterizedType ptype = (ParameterizedType) type;
+				entityClass = (Class<T>) ptype.getActualTypeArguments()[0];
+			}
+		}
+		return entityClass;
+	}
 
 	public SessionFactory getSessionFactory() {
 		return sessionFactory;
@@ -195,15 +212,6 @@ public class BaseDAOImpl<T extends Model> implements BaseDAO<T> {
 		Query query = sessionFactory.getCurrentSession().createQuery(hql);
 		query.setParameters(values, types);
 		return query.list();
-	}
-	
-	protected Class getEntityClass() {
-		java.lang.reflect.Type type = this.getClass().getGenericSuperclass();
-		if(type instanceof ParameterizedType) {
-			ParameterizedType ptype = (ParameterizedType) type;
-			return (Class) ptype.getActualTypeArguments()[0];
-		}
-		return Model.class;
 	}
 
 }

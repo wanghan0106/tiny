@@ -10,6 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 @ContextConfiguration(locations={"classpath:spring/service-*.xml"})
 @TransactionConfiguration(transactionManager="transactionManager",defaultRollback=false)
 @Transactional
-public class TransactionalTestCase {
+public abstract class TransactionalTestCase {
 
 }
