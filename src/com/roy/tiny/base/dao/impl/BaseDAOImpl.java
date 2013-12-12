@@ -123,6 +123,7 @@ public class BaseDAOImpl<T extends Model> implements BaseDAO<T> {
 		sort(criteria, sorter);
 	}
 
+	@SuppressWarnings("unchecked")
 	private void page(Criteria criteria, Pager pager) {
 		if (pager != null) {
 			List<Long> countList = criteria.setProjection(
