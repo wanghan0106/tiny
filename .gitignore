@@ -213,5 +213,4 @@ pip-log.txt
 
 #Mr Developer
 .mr.developer.cfg
-*.jar
 WebContent/WEB-INF/classes/*
