@@ -47,5 +47,10 @@ public class HomeController {
     public String notfound(){
         return "404";
     }
+	
+	@RequestMapping(value = "/500")
+    public String servererror(){
+        return "500";
+    }
 
 }

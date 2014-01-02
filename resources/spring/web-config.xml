@@ -27,7 +27,7 @@
     
 
     <!-- 开启controller注解支持 -->
-    <context:component-scan base-package="com.roy.tiny">
+    <context:component-scan base-package="com.roy.tiny" use-default-filters="false">
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
     </context:component-scan>
     
@@ -106,7 +106,7 @@
         <property name="exceptionMappings">
               <props>
                   <prop key="java.lang.Exception">
-                        error_all
+                        500
                 </prop>
             </props>
         </property>

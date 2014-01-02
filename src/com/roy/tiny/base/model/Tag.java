@@ -11,16 +11,16 @@ import javax.persistence.UniqueConstraint;
 @Entity
 @Table(name="tag",uniqueConstraints = {@UniqueConstraint(columnNames={"name"})})
 public class Tag extends Model {
-	private Long id;
+	private long id;
 	private String name;
 	private int priority;
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	public Long getId() {
+	public long getId() {
 		return id;
 	}
-	public void setId(Long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 	@Column(name="name",length=200,unique=true,updatable=false)

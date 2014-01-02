@@ -2,6 +2,7 @@ package com.roy.tiny.base.dao.cond;
 
 import org.hibernate.criterion.Criterion;
 
+import com.mongodb.DBObject;
 import com.roy.tiny.base.dao.cond.logic.AndCond;
 import com.roy.tiny.base.dao.cond.logic.NotCond;
 import com.roy.tiny.base.dao.cond.logic.OrCond;
@@ -76,4 +77,6 @@ public abstract class Cond {
 	public abstract Cond clone();
 	
 	public abstract Criterion toCriterion();
+	
+	public abstract DBObject toDBObject();
 }

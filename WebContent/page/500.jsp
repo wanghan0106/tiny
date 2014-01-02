@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>页面不存在</title>
+<title>出错了</title>
 </head>
 <link href="${ctx}/css/bootstrap/bootstrap.css" rel="stylesheet">
 <link href="${ctx}/css/common.css" rel="stylesheet">
@@ -18,9 +18,9 @@
 	<div id="wrap">
 		<div class="container">
 			<div class="page-header">
-				<h1>页面不存在！</h1>
+				<h1>出错了！</h1>
 			</div>
-			<p class="lead">在 <a href="${ctx}/home">Tiny</a>中没有发现您想要访问的页面。</p>
+			<p class="lead">服务器出现错误了，请返回<a href="${ctx}/home">首页</a>并重试一下。</p>
 			<p>
 				点击此处返回 <a href="${ctx}/home">首页</a>。
 			</p>

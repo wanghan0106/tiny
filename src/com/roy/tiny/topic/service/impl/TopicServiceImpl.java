@@ -6,6 +6,8 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.roy.tiny.base.dao.BaseDAO;
 import com.roy.tiny.base.dao.cond.Cond;
@@ -22,7 +24,6 @@ import com.roy.tiny.user.model.User;
 
 @Repository("topicService")
 public class TopicServiceImpl extends BaseServiceImpl<Topic> implements TopicService {
-	
 	private static final Logger log = LoggerFactory.getLogger(TopicServiceImpl.class);
 	
 	@Dao
@@ -33,7 +34,7 @@ public class TopicServiceImpl extends BaseServiceImpl<Topic> implements TopicSer
 	private BaseDAO<Tag> tagDao;
 	@Dao
 	private BaseDAO<Comment> commentDao;
-
+	
 	public void save(Topic topic,User user) {
 		Date date = new Date();
 		textDao.save(topic.getText());
@@ -61,6 +62,7 @@ public class TopicServiceImpl extends BaseServiceImpl<Topic> implements TopicSer
 	
 
 	@Override
+	@Transactional(readOnly=true)
 	public List<Comment> getComments(long topicId, Pager pager) {
 		return commentDao.query(Cond.eq("topic.id", topicId), pager, new Sorter("createTime","asc"));
 	}
@@ -78,6 +80,7 @@ public class TopicServiceImpl extends BaseServiceImpl<Topic> implements TopicSer
 	}
 
 	@Override
+	@Transactional(readOnly=true)
 	public Comment getCommentById(long id) {
 		return commentDao.get(id);
 	}

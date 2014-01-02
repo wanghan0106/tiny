@@ -3,6 +3,8 @@ package com.roy.tiny.base.dao.cond.property;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBObject;
 import com.roy.tiny.base.dao.cond.Cond;
 
 public class NeCond extends PropertyCond {
@@ -21,5 +23,10 @@ public class NeCond extends PropertyCond {
 			return Restrictions.isNotNull(property);
 		}
 		return Restrictions.ne(property, value);
+	}
+	
+	@Override
+	public DBObject toDBObject() {
+		return new BasicDBObject(property,new BasicDBObject("$ne",value));
 	}
 }

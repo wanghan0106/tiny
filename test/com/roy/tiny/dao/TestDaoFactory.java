@@ -24,7 +24,7 @@ public class TestDaoFactory extends TransactionalTestCase {
 	@Autowired
 	private UserService userService;
 	
-	@Test
+	//@Test
 	public void testGetDao() {
 		BaseDAO<User> dao = daoFactory.getDao(User.class);
 		List<User> userList = dao.query(Cond.eq("sex", 0));
@@ -35,6 +35,11 @@ public class TestDaoFactory extends TransactionalTestCase {
 		Assert.assertNotNull(userList);
 		userList = userService.query(Cond.eq("sex", 0));
 		Assert.assertNotNull(userList);
+	}
+	
+	@Test
+	public void testGetMongoDao() {
+		BaseDAO<User> dao = daoFactory.getDao(User.class);
 	}
 
 }
