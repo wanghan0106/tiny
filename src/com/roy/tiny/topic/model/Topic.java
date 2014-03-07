@@ -15,6 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.roy.tiny.base.model.Model;
@@ -36,6 +37,7 @@ public class Topic extends Model {
 	private List<Tag> tags = new ArrayList<Tag>();
 	private int replyNumber = 0;
 	private String tagNames;
+	private List<Comment> comments = new ArrayList<Comment>();
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -105,6 +107,13 @@ public class Topic extends Model {
 	}
 	public void setTagNames(String tagNames) {
 		this.tagNames = tagNames;
+	}
+	@OneToMany(mappedBy="topic")
+	public List<Comment> getComments() {
+		return comments;
+	}
+	public void setComments(List<Comment> comments) {
+		this.comments = comments;
 	}
 	
 }

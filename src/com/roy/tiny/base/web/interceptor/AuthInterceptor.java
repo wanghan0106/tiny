@@ -40,6 +40,7 @@ public class AuthInterceptor implements HandlerInterceptor  {
 				 * This request will be redirected to login page.
 				 */
 				response.sendRedirect(request.getContextPath()+"/login");
+				return false;
 			}
 		}
 		return true;
